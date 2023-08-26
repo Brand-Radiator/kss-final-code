@@ -107,8 +107,14 @@ app.patch("/api/upadateImage", async (req, res) => {
       new: true,
     }
   );
+
+
   // { adharNo: 975003524557 }
   client.close();
+
+  res.status(200).json(result);
+
+
 });
 
 app.get("/", (req, res) => {
