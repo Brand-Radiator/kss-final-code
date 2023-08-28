@@ -76,7 +76,7 @@ app.get("/api/fetchDetails/:id", async (req, res) => {
     const collection = db.collection(collectionName);
     // console.log(typeof (id));
     let idn = Number(id);
-    const result = await collection.find({ adharNo: idn }).toArray(); // { adharNo: 975003524557 }
+    const result = await collection.find({ SL_NO: idn }).toArray(); // { SL_NO: 123 }
     client.close();
     // console.log(result);
     res.status(200).json(result);
@@ -91,17 +91,17 @@ app.get("/api/fetchDetails/:id", async (req, res) => {
 // patch api  to update data image and attendance
 app.patch("/api/upadateImage", async (req, res) => {
   let LiveImageURL = req.body.LiveImageURL;
-  let adharNo = req.body.adharNo;
+  let serialNumber = req.body.SL_NO;
   console.log(LiveImageURL, "imageeeeeee")
-  console.log(adharNo, "adharrrrrrrrrr");
+  console.log(serialNumber, "serial number");
 
   const client = await MongoClient.connect(mongoUrl);
   const db = client.db(dbName);
   const collection = db.collection(collectionName);
   // console.log(typeof (id));
-  let idn = Number(adharNo);
+  let idn = Number(serialNumber);
   const result = await collection.updateOne(
-    { adharNo: idn },
+    { SL_NO: serialNumber },
     { $set: { LiveImageURL: LiveImageURL, attendance: true } },
     {
       new: true,
@@ -109,7 +109,7 @@ app.patch("/api/upadateImage", async (req, res) => {
   );
 
 
-  // { adharNo: 975003524557 }
+
   client.close();
 
   res.status(200).json(result);
